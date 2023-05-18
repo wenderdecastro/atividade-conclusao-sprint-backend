@@ -7,7 +7,7 @@ namespace atividade_conclusao_sprint_backend
 {
     public class Marca
     {
-        
+
         public int Codigo { get; private set; }
         public string NomeMarca { get; private set; }
         public DateTime DataCadastro { get; private set; }
@@ -21,36 +21,36 @@ namespace atividade_conclusao_sprint_backend
             Codigo = _codigoMarca;
             DataCadastro = DateTime.Now;
         }
-        public List<Marca> Listar()
+        public void Listar()
         {
             foreach (var item in ListaMarca)
             {
                 Console.WriteLine(@$"
-            Codigo:           {item.Codigo}
-            Nome da Marca:    {item.NomeMarca}
-            Data do cadastro: {item.DataCadastro}");
+Codigo:           {item.Codigo}
+Nome da Marca:    {item.NomeMarca}
+Data do cadastro: {item.DataCadastro}");
             }
-            return ListaMarca;
         }
-        public string Cadastrar()
+        public void Cadastrar()
         {
-            Console.WriteLine($"Por favor insira o nome da marca:");
+            Console.WriteLine($"Por favor insira o nome da marca: ");
             string nomeDaMarca = Console.ReadLine();
-            Console.WriteLine($"Agora insira o codigo da marca (apenas números)");
+            Console.WriteLine($"Insira o codigo da marca: ");
             int codigoDaMarca = int.Parse(Console.ReadLine());
             ListaMarca.Add(
                 new Marca(nomeDaMarca, codigoDaMarca)
             );
-            return "Marca registrada!";
+            Console.WriteLine($"Marca cadastrada.");
+
         }
-        public string Deletar(Marca _marca)
+        public void Deletar()
         {
-            Console.WriteLine($"Por favor insira o código da marca (apenas números)");
+            Console.WriteLine($"Insira o código da marca.");
             int codigoDaMarca = int.Parse(Console.ReadLine());
-            _marca = ListaMarca.Find(z => z.Codigo == codigoDaMarca);
-            int index = ListaMarca.IndexOf(_marca);
+            Marca marca = ListaMarca.Find(z => z.Codigo == codigoDaMarca);
+            int index = ListaMarca.IndexOf(marca);
             ListaMarca.RemoveAt(index);
-            return "Produto deletado!";
+            Console.WriteLine($"Marca deletada.");
         }
     }
 }

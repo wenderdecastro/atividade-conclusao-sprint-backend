@@ -13,14 +13,13 @@ namespace atividade_conclusao_sprint_backend
         public string Email { get; private set; }
         public string Senha { get; private set; }
         public Login login { get; private set; }
-
         public bool Logado { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public Usuario()
         {
-            NomeUsuario = "Andre";
-            Senha = "1234567";
-            Email = "andre@gmail.com";
+            NomeUsuario = "ZezinhoMotopeças";
+            Senha = "carburadorfurado";
+            Email = "ZeDaMotoEZika@gmail.com";
             DataCadastro = DateTime.Now;
         }
         public Usuario(string _nomeUsuario, string _senhaUsuario, string _emailUsuario)
@@ -32,17 +31,21 @@ namespace atividade_conclusao_sprint_backend
         }
         public void Cadastrar()
         {
-            Console.WriteLine($"Insira o nome de usuário: ");
-            string NomeUsuario = Console.ReadLine();
 
-            Console.WriteLine($"Digite o email");
-            string email = Console.ReadLine();
+            Console.WriteLine($"\n\nCADASTRO");
+            
 
-            Console.WriteLine($"Agora vamos cadastrar a senha (min de 6 caracteres, max de 10 caracteres)");
-            string senha = Console.ReadLine();
+            Console.WriteLine($"\nInsira o nome de usuário: ");
+            NomeUsuario = Console.ReadLine();
+
+            Console.WriteLine($"\nDigite o email");
+            Email = Console.ReadLine();
+
+            Console.WriteLine($"\nDigite a senha do usuário:");
+            Senha = Console.ReadLine();
 
             listaUsuario.Add(
-                new Usuario(NomeUsuario, senha, email)
+                new Usuario(NomeUsuario, Senha, Email)
             );
         }
         public void Listar()
@@ -57,7 +60,7 @@ namespace atividade_conclusao_sprint_backend
         }
         public void Deletar()
         {
-            Console.WriteLine($"Por favor insira o Email do Usuário");
+            Console.WriteLine($"Insira o email do Usuário");
             string emailUsuario = Console.ReadLine();
             Usuario _usuario = listaUsuario.Find(z => z.Email == emailUsuario);
             int index = listaUsuario.IndexOf(_usuario);

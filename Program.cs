@@ -2,4 +2,3 @@
 
 Login Login = new Login(false);
 
-Login.Menu();

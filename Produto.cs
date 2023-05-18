@@ -10,52 +10,71 @@ namespace atividade_conclusao_sprint_backend
     {
         public Usuario CadastradoPor { get; private set; }
         public string NomeProduto { get; private set; }
-        public int Codigo { get; private set; }
+        public string Codigo { get; private set; }
         public float Preco { get; private set; }
-        public DateTime DataCadastro { get; private set; }
+        public DateTime DataCadastro { get; private set; } = DateTime.Now;
         public Marca Marca { get; private set; }
         Marca ObjMarca = new Marca();
-        public List<Produto> ListaDeProdutos { get; private set; }
+        public List<Produto> ListaDeProdutos = new List<Produto>();
         public Produto()
         {
 
         }
 
-        public Produto(string _nomeProduto, int _codigoProduto, float _precoProduto, Marca _marca, Usuario _usuario)
+        public void Cadastrar()
         {
-            NomeProduto = _nomeProduto;
-            Codigo = _codigoProduto;
-            Preco = _precoProduto;
-            DataCadastro = DateTime.Now;
-            Marca = _marca;
-            CadastradoPor = _usuario;
-        }
 
-        public string Cadastrar(Produto _produto)
-        {
+            Produto novoProduto = new Produto();
+
             Console.WriteLine($"\nQual seria o nome do produto?");
-            string nomeProduto = Console.ReadLine();
+            novoProduto.NomeProduto = Console.ReadLine();
 
             Console.WriteLine($"\nQual o código do produto?");
-            int codigoProduto = int.Parse(Console.ReadLine());
+            novoProduto.Codigo = Console.ReadLine();
 
             Console.WriteLine($"Qual o preço do produto?");
-            float precoProduto = float.Parse(Console.ReadLine());
+            novoProduto.Preco = float.Parse(Console.ReadLine());
 
-            Console.WriteLine($"Qual o código da marca?");
-            int codigoMarca = int.Parse(Console.ReadLine());
+            // Console.WriteLine($"Qual o código da marca?");
+            // novoProduto.Marca = int.Parse(Console.ReadLine());
 
             Console.WriteLine($"Produto cadastrado em: {DataCadastro}");
 
-            return "";
+            Console.WriteLine($"Produto cadastrado por: {CadastradoPor}");
+
+            ListaDeProdutos.Add(novoProduto);
+
         }
-        public List<Produto> Listar()
+
+        public void Listar()
         {
-            return ListaDeProdutos;
+            if (ListaDeProdutos.Count() == 0)
+            {
+                Console.WriteLine($"Lista vazia..");
+            }
+            else
+            {
+                foreach (Produto p in ListaDeProdutos)
+                {
+                    Console.WriteLine(@$"------------------------
+Codigo: {p.Codigo}
+Nome: {p.NomeProduto}
+Preco: {p.Preco}
+Marca: 
+Cadastro realizado por: {p.CadastradoPor}
+------------------------");
+                }
+            }
         }
-        public string Deletar(Produto _produto)
+        
+        public void Deletar()
         {
-            return "";
+            Console.WriteLine($"Por favor insira o código do produto: ");
+            string CodigoProduto = Console.ReadLine();
+            Produto _produto = ListaDeProdutos.Find(z => z.Codigo == CodigoProduto);
+            int index = ListaDeProdutos.IndexOf(_produto);
+            ListaDeProdutos.RemoveAt(index);
+            Console.WriteLine($"Produto deletado.");
         }
     }
 }
