@@ -3,136 +3,119 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace atividade_conclusao_sprint_backend
+namespace projeto_produtos
 {
     public class Login
     {
-        Usuario usuario = new Usuario();
-        Produto produto = new Produto();
-        Marca marca = new Marca();
-        List<Marca> listaMarca = new List<Marca>();
-        public string logarUsuario { get; private set; }
-        public string logarSenha { get; private set; }
-        public bool Logado { get; private set; }
-        public Login(bool _logado)
+        public bool Logado { get; set; }
+        ConsoleKeyInfo opcao;
+
+        public Login()
         {
-            Logado = _logado;
+            Usuario user = new Usuario();
 
-            do
+            Logar(user);
+
+            if (Logado)
             {
-
-                Console.WriteLine(@$"
-------------------------
-Menu de login
-
-[1] - Cadastrar Usuário
-[2] - Logar Usuário
-[4] - Listar Usuários
-[5] - Deletar Usuário
-
-[0] - Sair
-------------------------");
-
-                ConsoleKeyInfo opcao = Console.ReadKey(true);
-
-                switch (opcao.Key)
-                {
-                    case ConsoleKey.D1:
-                        usuario.Cadastrar();
-                        break;
-                    case ConsoleKey.D2:
-                        Logar();
-                        break;
-                    case ConsoleKey.D3:
-                        usuario.Listar();
-                        break;
-                    case ConsoleKey.D4:
-                        usuario.Deletar();
-                        break;
-                    case ConsoleKey.D0:
-                        Environment.Exit(0);
-                        break;
-                }
-            } while (Logado == false);
-            Menu();
-
+                GerarMenu();
+            }
         }
-        public string Logar()
+        public void Logar(Usuario _usuario)
         {
+            Console.WriteLine($"Digite seu email:");
+            string email = Console.ReadLine();
 
-            Console.WriteLine($"\n\nLOGIN");
+            Console.WriteLine($"Digite a senha:");
+            string senha = Console.ReadLine();
 
-            Console.WriteLine($"\nDigite o nome do usuário: ");
-            logarUsuario = Console.ReadLine();
-
-            Console.WriteLine($"\nDigite a senha do usuário: ");
-            logarSenha = Console.ReadLine();
-
-            if ((logarUsuario == usuario.NomeUsuario) && (logarSenha == usuario.Senha))
+            if (email == _usuario.Email && senha == _usuario.Senha)
             {
-                Logado = true;
-                Console.WriteLine($"Login Efetuado");
+                this.Logado = true;
+                Console.WriteLine($"Login efetuado");
             }
             else
             {
-                Logado = false;
-                Console.WriteLine($"Nome ou senha incorretos.");
+                this.Logado = false;
+                Console.WriteLine($"Falha ao logar");
             }
+        }
+        public void Deslogar(Usuario _usuario)
+        {
 
-            return "";
         }
 
-        public string Deslogar(Usuario _usuario)
+        public void GerarMenu()
         {
-            return "";
-        }
+            Produto produto = new Produto();
+            Marca Marca = new Marca();
 
-        public void Menu()
-        {
             do
             {
                 Console.WriteLine(@$"
-------------------------
-Menu do administrador
 
-[1] - Cadastrar Produto
-[2] - Listar Produtos
-[3] - Deletar Produtos
-[4] - Cadastrar Marca
-[5] - Listar Marcas
-[6] - Deletar Marcas
+       menu do adm B)
+===========================    
+|                         |
+|         PRODUTOS        |
+|                         |
+| 1 - Cadastrar produto   |
+| 2 - Listar produtos     |
+| 3 - Remover produto     |
+===========================    
+|                         |
+|         MARCAS          |
+|                         |
+| 4 - Cadastrar marca     |
+| 5 - Listar marcas       |
+| 6 - Deletar marcas      |
+===========================          
+| 0 - Sair                |
+===========================         
+            ");
 
-[0] - Sair
-------------------------");
-
-                ConsoleKeyInfo opcao = Console.ReadKey(true);
+                opcao = Console.ReadKey(true);
 
                 switch (opcao.Key)
                 {
                     case ConsoleKey.D1:
                         produto.Cadastrar();
                         break;
+
                     case ConsoleKey.D2:
                         produto.Listar();
                         break;
+
                     case ConsoleKey.D3:
-                        produto.Deletar();
+                        Console.WriteLine($"Digite o codigo do produto a ser deletado:");
+                        int codigoProduto = int.Parse(Console.ReadLine());
+                        produto.Deletar(codigoProduto);
                         break;
+
                     case ConsoleKey.D4:
-                        marca.Cadastrar();
+                        Marca.Cadastrar();
                         break;
+
                     case ConsoleKey.D5:
-                        marca.Listar();
+                        Marca.Listar();
                         break;
+
                     case ConsoleKey.D6:
-                        marca.Deletar();
+                        Console.WriteLine($"Digite o codigo da marca a ser deletada:");
+                        int codigoMarca = int.Parse(Console.ReadLine());
+                        produto.Deletar(codigoMarca);
                         break;
+
                     case ConsoleKey.D0:
                         Environment.Exit(0);
                         break;
-                }
 
+                    default:
+                        Console.WriteLine($"Opção invalida");
+                        break;
+                }
             } while (true);
+
         }
     }
 }

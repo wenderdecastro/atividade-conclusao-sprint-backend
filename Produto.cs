@@ -2,79 +2,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using atividade_conclusao_sprint_backend;
+using projeto_produtos;
 
-namespace atividade_conclusao_sprint_backend
+namespace projeto_produtos
 {
     public class Produto
     {
-        public Usuario CadastradoPor { get; private set; }
-        public string NomeProduto { get; private set; }
-        public string Codigo { get; private set; }
-        public float Preco { get; private set; }
-        public DateTime DataCadastro { get; private set; } = DateTime.Now;
-        public Marca Marca { get; private set; }
-        Marca ObjMarca = new Marca();
-        public List<Produto> ListaDeProdutos = new List<Produto>();
-        public Produto()
-        {
-
-        }
-
+        public int Codigo { get; set; }
+        public string NomeProduto { get; set; }
+        public float Preco { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public Marca Marca = new Marca();
+        public string CadastradoPor;
+        Usuario user = new Usuario();
+        List<Produto> ListaDeProduto = new List<Produto>();
         public void Cadastrar()
         {
+            Produto produto = new Produto();
 
-            Produto novoProduto = new Produto();
+            Console.WriteLine($"Digite o Codigo do produto:");
+            produto.Codigo = int.Parse(Console.ReadLine());
 
-            Console.WriteLine($"\nQual seria o nome do produto?");
-            novoProduto.NomeProduto = Console.ReadLine();
+            Console.WriteLine($"Digite o nome do produto:");
+            produto.NomeProduto = Console.ReadLine();
 
-            Console.WriteLine($"\nQual o código do produto?");
-            novoProduto.Codigo = Console.ReadLine();
+            Console.WriteLine($"Digite o preço do produto:");
+            produto.Preco = float.Parse(Console.ReadLine());
 
-            Console.WriteLine($"Qual o preço do produto?");
-            novoProduto.Preco = float.Parse(Console.ReadLine());
+            Marca.Cadastrar();
 
-            // Console.WriteLine($"Qual o código da marca?");
-            // novoProduto.Marca = int.Parse(Console.ReadLine());
-
-            Console.WriteLine($"Produto cadastrado em: {DataCadastro}");
-
-            Console.WriteLine($"Produto cadastrado por: {CadastradoPor}");
-
-            ListaDeProdutos.Add(novoProduto);
-
+            ListaDeProduto.Add(produto);
         }
-
         public void Listar()
         {
-            if (ListaDeProdutos.Count() == 0)
+            CadastradoPor = user.Nome;
+            DataCadastro = DateTime.Now;
+
+            foreach (Produto p in ListaDeProduto)
             {
-                Console.WriteLine($"Lista vazia..");
-            }
-            else
-            {
-                foreach (Produto p in ListaDeProdutos)
-                {
-                    Console.WriteLine(@$"------------------------
+                Console.WriteLine(@$"
+===============================
 Codigo: {p.Codigo}
 Nome: {p.NomeProduto}
 Preco: {p.Preco}
-Marca: 
+Marca: {p.Marca.nomeMarca}
 Cadastro realizado por: {p.CadastradoPor}
-------------------------");
-                }
+===============================
+");
+                Console.WriteLine($"Pressione qualquer tecla para continuar...");
+                Console.ReadKey();
+
+            }
+
+            if (ListaDeProduto.Count() == 0)
+            {
+                Console.WriteLine($"Lista vazia..");
             }
         }
-        
-        public void Deletar()
+        public void Deletar(int _codigo)
         {
-            Console.WriteLine($"Por favor insira o código do produto: ");
-            string CodigoProduto = Console.ReadLine();
-            Produto _produto = ListaDeProdutos.Find(z => z.Codigo == CodigoProduto);
-            int index = ListaDeProdutos.IndexOf(_produto);
-            ListaDeProdutos.RemoveAt(index);
-            Console.WriteLine($"Produto deletado.");
+            Produto produtoAchado = new Produto();
+            produtoAchado = ListaDeProduto.Find(x => x.Codigo == _codigo);
+
+            ListaDeProduto.Remove(produtoAchado);
+            Console.WriteLine($"Produto deletado!");
+
         }
     }
 }
